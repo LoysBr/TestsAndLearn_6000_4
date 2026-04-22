@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "FirstPersonInputActions",
     "maps": [
         {
@@ -36,6 +37,15 @@
                     "name": "Sprint",
                     "type": "PassThrough",
                     "id": "980e881e-182c-404c-8cbf-3d09fdb48fef",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PauseGame",
+                    "type": "Button",
+                    "id": "b145c481-1255-4512-9602-37cf6ba449ca",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -150,6 +160,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b1a8499-068b-4867-a28c-1c1acbd8e6f4",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
