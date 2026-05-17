@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 namespace SazenGames.Skeleton
 {
-    public class SimpleCameraController : MonoBehaviour
+    public class TacticalCameraController : MonoBehaviour
     {
         class CameraState
         {
@@ -55,9 +54,6 @@ namespace SazenGames.Skeleton
         CameraState m_TargetCameraState = new CameraState();
         CameraState m_InterpolatingCameraState = new CameraState();
 
-        [SerializeField] private LayerMask m_TacticalGridLayer;
-        [SerializeField] private GameObject m_TacticalGridPointerIndicator;
-
         [Header("Movement Settings")]
         [Tooltip("Time it takes to interpolate camera position 99% of the way to the target."), Range(0.001f, 1f)]
         [SerializeField] private float m_PositionLerpTime = 0.5f;
@@ -91,13 +87,19 @@ namespace SazenGames.Skeleton
         private InputAction m_InputActionCameraRotationDelta;
         private InputAction m_InputActionCameraPointer;
 
-        private Vector3 m_inputDirection;
+        private Vector3 m_InputDirection;
+        private Vector2 m_CameraPointerPosition;
 
-        void OnEnable()
+        public Ray GetPointerScreenToRay()
+        {
+            return m_CameraComponent.ScreenPointToRay(m_CameraPointerPosition);
+        }
+
+        private void OnEnable()
         {
             m_TargetCameraState.SetFromTransform(transform);
             m_InterpolatingCameraState.SetFromTransform(transform);
-            m_inputDirection = new Vector3();
+            m_InputDirection = new Vector3();
 
             m_CameraMovementMap = InputSystem.actions.FindActionMap("CameraMovement");
             m_CameraMovementMap.Enable();
@@ -111,9 +113,11 @@ namespace SazenGames.Skeleton
             m_InputActionCameraButton = m_CameraMovementMap.FindAction("CameraButton");
             m_InputActionCameraRotationDelta = m_CameraMovementMap.FindAction("CameraRotationDelta");
             m_InputActionCameraPointer = m_CameraMovementMap.FindAction("Point");
+
+            m_CameraPointerPosition = Vector2.zero;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             m_CameraMovementMap?.Disable();
         }
@@ -144,24 +148,14 @@ namespace SazenGames.Skeleton
         {
             if (m_InputActionCameraPointer != null)
             {
-                Debug.Log("pointer input action : " + m_InputActionCameraPointer.ReadValue<Vector2>());
-
-                Ray ray = m_CameraComponent.ScreenPointToRay(m_InputActionCameraPointer.ReadValue<Vector2>());
-                if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000f, m_TacticalGridLayer))
-                {
-                    SetGridPointerIndicatorPosition(hitInfo.point);
-                }
+                //Debug.Log("pointer input action : " + m_InputActionCameraPointer.ReadValue<Vector2>());
+                m_CameraPointerPosition = m_InputActionCameraPointer.ReadValue<Vector2>();
             }
-        }
-
-        private void SetGridPointerIndicatorPosition(Vector3 position)
-        {
-            m_TacticalGridPointerIndicator.transform.position = position;
         }
 
         private void CheckCamTranslationInputActions()
         {
-            m_inputDirection = Vector3.zero;
+            m_InputDirection = Vector3.zero;
 
             if (m_ignoreInput)
             {
@@ -170,33 +164,33 @@ namespace SazenGames.Skeleton
 
             if (m_InputActionCameraUp != null && m_InputActionCameraUp.IsPressed())
             {
-                m_inputDirection += Vector3.up;
+                m_InputDirection += Vector3.up;
             }
             if (m_InputActionCameraDown != null && m_InputActionCameraDown.IsPressed())
             {
-                m_inputDirection += Vector3.down;
+                m_InputDirection += Vector3.down;
             }
             if (m_InputActionCameraLeft != null && m_InputActionCameraLeft.IsPressed())
             {
-                m_inputDirection += Vector3.left;
+                m_InputDirection += Vector3.left;
             }
             if (m_InputActionCameraRight != null && m_InputActionCameraRight.IsPressed())
             {
-                m_inputDirection += Vector3.right;
+                m_InputDirection += Vector3.right;
             }
             if (m_InputActionCameraForward != null && m_InputActionCameraForward.IsPressed())
             {
-                m_inputDirection += Vector3.forward;
+                m_InputDirection += Vector3.forward;
             }
             if (m_InputActionCameraBackward != null && m_InputActionCameraBackward.IsPressed())
             {
-                m_inputDirection += Vector3.back;
+                m_InputDirection += Vector3.back;
             }
         }
 
-        Vector3 GetInputTranslationDirection()
+        private Vector3 GetInputTranslationDirection()
         {
-            return m_inputDirection * m_TranslationSpeed;
+            return m_InputDirection * m_TranslationSpeed;
         }
 
         private void CheckCamRotationInputActions()
@@ -230,7 +224,7 @@ namespace SazenGames.Skeleton
         //        }
 
 
-        void Update()
+        private void Update()
         {
             CheckPointerInputActions();
 

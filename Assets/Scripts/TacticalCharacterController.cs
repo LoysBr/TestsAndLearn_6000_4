@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SkeletonController : MonoBehaviour
+public class TacticalCharacterController : MonoBehaviour
 {
     [SerializeField] private Animator m_Animator;
     [SerializeField] private float m_WalkSpeed = 1f;
