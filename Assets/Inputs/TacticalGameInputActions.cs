@@ -111,6 +111,15 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DoCharacterAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""e44f34b7-4ec5-4a19-955c-acf0868a1e6c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -287,6 +296,17 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""MoveCharacterToSelectedPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b254f815-0dfb-417b-b0de-6276f406512f"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""DoCharacterAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1240,6 +1260,7 @@ namespace UnityEngine.InputSystem
             m_PlayerController = asset.FindActionMap("PlayerController", throwIfNotFound: true);
             m_PlayerController_Move = m_PlayerController.FindAction("Move", throwIfNotFound: true);
             m_PlayerController_MoveCharacterToSelectedPosition = m_PlayerController.FindAction("MoveCharacterToSelectedPosition", throwIfNotFound: true);
+            m_PlayerController_DoCharacterAttack = m_PlayerController.FindAction("DoCharacterAttack", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1354,6 +1375,7 @@ namespace UnityEngine.InputSystem
         private List<IPlayerControllerActions> m_PlayerControllerActionsCallbackInterfaces = new List<IPlayerControllerActions>();
         private readonly InputAction m_PlayerController_Move;
         private readonly InputAction m_PlayerController_MoveCharacterToSelectedPosition;
+        private readonly InputAction m_PlayerController_DoCharacterAttack;
         /// <summary>
         /// Provides access to input actions defined in input action map "PlayerController".
         /// </summary>
@@ -1373,6 +1395,10 @@ namespace UnityEngine.InputSystem
             /// Provides access to the underlying input action "PlayerController/MoveCharacterToSelectedPosition".
             /// </summary>
             public InputAction @MoveCharacterToSelectedPosition => m_Wrapper.m_PlayerController_MoveCharacterToSelectedPosition;
+            /// <summary>
+            /// Provides access to the underlying input action "PlayerController/DoCharacterAttack".
+            /// </summary>
+            public InputAction @DoCharacterAttack => m_Wrapper.m_PlayerController_DoCharacterAttack;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1405,6 +1431,9 @@ namespace UnityEngine.InputSystem
                 @MoveCharacterToSelectedPosition.started += instance.OnMoveCharacterToSelectedPosition;
                 @MoveCharacterToSelectedPosition.performed += instance.OnMoveCharacterToSelectedPosition;
                 @MoveCharacterToSelectedPosition.canceled += instance.OnMoveCharacterToSelectedPosition;
+                @DoCharacterAttack.started += instance.OnDoCharacterAttack;
+                @DoCharacterAttack.performed += instance.OnDoCharacterAttack;
+                @DoCharacterAttack.canceled += instance.OnDoCharacterAttack;
             }
 
             /// <summary>
@@ -1422,6 +1451,9 @@ namespace UnityEngine.InputSystem
                 @MoveCharacterToSelectedPosition.started -= instance.OnMoveCharacterToSelectedPosition;
                 @MoveCharacterToSelectedPosition.performed -= instance.OnMoveCharacterToSelectedPosition;
                 @MoveCharacterToSelectedPosition.canceled -= instance.OnMoveCharacterToSelectedPosition;
+                @DoCharacterAttack.started -= instance.OnDoCharacterAttack;
+                @DoCharacterAttack.performed -= instance.OnDoCharacterAttack;
+                @DoCharacterAttack.canceled -= instance.OnDoCharacterAttack;
             }
 
             /// <summary>
@@ -2049,6 +2081,13 @@ namespace UnityEngine.InputSystem
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnMoveCharacterToSelectedPosition(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "DoCharacterAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnDoCharacterAttack(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

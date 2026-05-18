@@ -6,10 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     public event Action MoveCharacterToSelectedPositionEvent;
 
+    [SerializeField] private TacticalCharacterController m_SelectedCharacter;
+
     private InputActionMap m_PlayerControllerActionMap;
     private InputAction m_MoveCharacterToSelectedPosition;
+    private InputAction m_DoCharacterAttack;
 
-    [SerializeField] private TacticalCharacterController m_SelectedCharacter;
 
     private void OnEnable()
     {
@@ -17,18 +19,19 @@ public class PlayerController : MonoBehaviour
         m_PlayerControllerActionMap.Enable();
 
         m_MoveCharacterToSelectedPosition = m_PlayerControllerActionMap.FindAction("MoveCharacterToSelectedPosition");
+        m_DoCharacterAttack = m_PlayerControllerActionMap.FindAction("DoCharacterAttack");
     }
-
-    //public void Init(ITacticalGroundStrategy groundStrategy)
-    //{
-    //    m_GroundStrategy = groundStrategy;
-    //}
 
     private void Update()
     {
         if (m_MoveCharacterToSelectedPosition.IsPressed())
         {
             MoveCharacterToSelectedPositionEvent?.Invoke();
+        }
+
+        if (m_DoCharacterAttack.IsPressed())
+        {
+            DoCharacterAttack();
         }
     }
 
@@ -38,6 +41,14 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("MoveCharacterToSelectedPosition(" + position + ")");
             m_SelectedCharacter.MoveCharacterToSelectedPosition(moveToPosition);
+        }
+    }
+
+    public void DoCharacterAttack()
+    {
+        if (m_SelectedCharacter)
+        {
+            m_SelectedCharacter.PlayAttackAnimation();
         }
     }
 }

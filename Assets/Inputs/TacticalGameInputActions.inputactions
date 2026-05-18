@@ -23,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "DoCharacterAttack",
+                    "type": "Button",
+                    "id": "e44f34b7-4ec5-4a19-955c-acf0868a1e6c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -199,6 +208,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "MoveCharacterToSelectedPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b254f815-0dfb-417b-b0de-6276f406512f",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "DoCharacterAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
