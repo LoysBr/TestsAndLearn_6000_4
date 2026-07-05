@@ -47,7 +47,7 @@ public class TacticalGameManager : MonoBehaviour
         //TEST SPAWN ENEMIES
         int spawnedCount = 0;
         int skippedCount = 0;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 50; i++)
         {
             if (m_ground.TryGetNewEnemyPosition(out Vector3 spawnPosition))
             {
