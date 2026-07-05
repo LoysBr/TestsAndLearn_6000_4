@@ -62,7 +62,9 @@ Refresh my memory with things I haven't used for a long time or explore new tool
 - Additional character abilities (Mage spells, Fighter combos)
 - Possibility to select current character
 
+--- 
 
+![Scene Image](Thumbnail.png)
 
 ## 🚀 Get Started - Download
 
