@@ -1,0 +1,19 @@
+FIX 3C : 
+- Camera : 
+    - press right click + turn : orient Camera : "Input Modifier ?" (right click ON/OFF) => Disable all other inputs, enable "move pointer" => analog X Y qui bouge camera
+    - move (far) : translate Camera : lorsque pointeur sort de l'écran (modifier ??) : commande "Translate Camera"
+
+-Character:
+    - left click : move to point click (on ground)
+
+- pointer:
+    - système de "Context" : suivant ce qu'on pointe, change le context : PointingGround, PointingEnemy, PointingCharacter, PointingOther
+    - show "move pointer" when Character can move there (selecting ground)
+    - show "NO move pointer" when it cannot (selecting ground)
+    - show "normal pointer" when selecting something else
+
+- Ground Indicator
+    - After command "move there" (left click) show "move destination" ground indicator
+    - after Destination Reached, hide ground indicator
+
+On a peut etre besoin d'un Input Manager qui détecte les Modifiers et les changements de Context ? à voir comment c'est fait dans Unity . Puis redirige en Event<InputCommand> ?
