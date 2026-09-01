@@ -159,3 +159,17 @@ Within the method groups above, order methods by **call sequence** so the code r
 
 ## Git Commits
 - Never add a "Co-Authored-By" line or any AI attribution to commit messages
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live as local markdown files under `.scratch/<feature-slug>/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five canonical roles, each label string equal to its name. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` at the repo root plus `docs/adr/`. See `docs/agents/domain.md`.
