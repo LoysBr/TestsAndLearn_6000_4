@@ -6,13 +6,11 @@ allowed-tools: [Read, Glob]
 
 # Read Scripts
 
-Read all C# scripts in `Assets/Scripts/`, excluding `Assets/Scripts/ScriptableObjectEvents/`.
+Read all C# scripts designated in ".claude/ScriptsInTheScope.txt"
 
 ## Instructions
 
-1. Use Glob to find all `.cs` files under `Assets/Scripts/` recursively.
-2. Filter out any file whose path contains `ScriptableObjectEvents`.
-3. Read every remaining file using the Read tool.
-4. Once all files are read, confirm to the user which files were loaded.
+1. Use Glob to find all `.cs` files designated in ".claude/ScriptsInTheScope.txt"
+2. Once all files are read, confirm to the user which files were loaded.
 
-Do NOT summarise the files unless the user asks. Just confirm they are read and you are ready.
+Do NOT summarise the files unless the user asks. Just confirm they are read and you are ready. Do not think about them or analyze them unless the user asks. Do not make any assumptions about the code or its purpose. Just read and load the files into memory.

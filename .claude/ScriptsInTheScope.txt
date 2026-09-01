@@ -1,0 +1,4 @@
+These are all the script files I am currently working on.
+
+All the files located in `Assets/Scripts/` recursively, excluding `Assets/Scripts/ScriptableObjectEvents/` 
+and `Assets/Scripts/Multiplayer/ExampleOfNetworkObjectUnitTest.cs`.

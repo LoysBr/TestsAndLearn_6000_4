@@ -1,6 +1,10 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// A simple logger that we use in the whole project to log messages with different log levels
+/// 2 methods : one only for Editor log, one to log every where 
+/// </summary>
 public static class MyLogger
 {
     private const string LOGLEVEL_STRING_TRACE = "[TRCE]";

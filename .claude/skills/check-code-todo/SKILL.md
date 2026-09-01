@@ -6,11 +6,11 @@ allowed-tools: [Grep]
 
 # Check Code TODO
 
-Scan all C# files in `Assets/Scripts/` for TODO comments and present a clear list.
+Scan all C# files designated in ".claude/ScriptsInTheScope.txt"
 
 ## Instructions
 
-1. Use Grep to search for `TODO` (case-insensitive) across all `.cs` files under `Assets/Scripts/`.
+1. Use Grep to search for `TODO` (case-insensitive) across all files designated in ".claude/ScriptsInTheScope.txt"
 2. Present the results grouped by file, with the line number and the full comment text for each hit.
 3. If no TODOs are found, say so clearly.
 
@@ -26,4 +26,4 @@ Found X TODOs across Y files:
   - Line 17: //TODO : fix this
 ```
 
-Keep it concise — no extra commentary unless the user asks.
+Keep it concise — no extra commentary unless the user asks, and no need to think about the TODOs' content or context. Just report them as found.

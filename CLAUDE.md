@@ -134,7 +134,7 @@ Within the method groups above, order methods by **call sequence** so the code r
 - **Single responsibility per method** — a method must do one thing. Do not bundle unrelated concerns into it (e.g. a method that computes a value must not also build/initialize unrelated state; move that to the caller or a dedicated method).
 
 ## Comments
-- Avoid obvious comments; use them only for complex logic or workarounds
+- Avoid obvious comments; use them only for complex logic or workarounds 
 - Explain WHY, not WHAT
   ```csharp
   // Good: explains the reason
