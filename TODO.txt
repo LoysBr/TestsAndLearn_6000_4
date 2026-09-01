@@ -16,4 +16,58 @@ FIX 3C :
     - After command "move there" (left click) show "move destination" ground indicator
     - after Destination Reached, hide ground indicator
 
-On a peut etre besoin d'un Input Manager qui détecte les Modifiers et les changements de Context ? à voir comment c'est fait dans Unity . Puis redirige en Event<InputCommand> ?
+? idea : On a peut etre besoin d'un Input Manager qui détecte les Modifiers et les changements de Context ? à voir comment c'est fait dans Unity . Puis redirige en Event<InputCommand> ?
+
+--------------------- small refacto : 
+
+- Grid / spacing
+    - Fix the spacing between Enemies located in two neighbour Cells: both Cells are free, both
+      spawns are legal, but the two Enemies can end up at almost the same world position (either
+      side of a shared Cell edge). The one-Enemy-per-Cell rule bounds density but does not
+      guarantee minimum spacing, which is what is actually wanted.
+
+- Grid / DistributionMethod naming
+    - Rename DistributionMethod.Uniform -> MaximumSpread, and DistributionMethod.Random ->
+      RandomlyScattered.
+    - Rewrite both XML comments: they currently describe the wrong behaviour. Uniform is
+      documented as "weighted by the number of free cells" but the code descends into the child
+      with the MOST free slots (fill-the-emptiest-branch). Random is documented as "uniform among
+      the branches that still have room", which is what it actually does.
+    - New wording: MaximumSpread = always descend into the branch with the most room, so
+      placements stay as far apart as the Grid can manage (the one that best approximates
+      Minimum Spacing). RandomlyScattered = pick any branch that still has room, clumping allowed.
+    - Rename the methods accordingly (TryGetFreeGridPosFromEmptiestChild /
+      TryGetFreeGridPosFromRandomChild).
+
+- Pointer & Ground Indicator : replace ITacticalGroundStrategy.IndicationType
+    Problem: IndicationType tangles two independent axes into one enum, and SimpleSelection and
+    MovementPreview currently fall through to the exact same indicator, so SimpleSelection means
+    nothing today.
+
+    Concept to implement - two separate notions:
+
+    1) Pointer Context = WHAT is under the pointer right now. One value at a time, decided by what
+       the ray hits: PointingGround, PointingEnemy, PointingCharacter, PointingOther (matches the
+       "systeme de Context" already noted above). It is a fact about the world, and it is what
+       decides which cursor to display.
+
+    2) Ground Indicator Role = WHY a mark is being placed on the Ground. Two roles only:
+         - Preview: follows the pointer continuously, shows where the Selected Character WOULD go.
+           Shown only while the Pointer Context allows a move, hidden otherwise.
+         - Confirmation: marks the destination that was actually commanded. Placed once on the
+           command, then hidden - either after a delay, or (better, per the Ground Indicator notes
+           above) when the Character reaches the destination.
+
+    Why split: the answer to "can this Character move here?" comes from the Pointer Context, while
+    "preview vs confirmation" is about which of the two marks is being asked for. They vary
+    independently - a Confirmation is legitimate on a destination whose Pointer Context has since
+    changed, and a Preview must react to context every frame.
+
+- Enemy lifecycle vs Grid membership : disambiguate RemoveEnemy
+    RemoveEnemy currently means two unrelated things, and calling the wrong one is a silent bug:
+    EnemySpawner.RemoveEnemy destroys the enemy (returns the presenter to the pool), while
+    ITacticalGroundStrategy / PopulationDensityController.RemoveEnemy only drops it from the Grid.
+    - EnemySpawner: CreateEnemy -> Spawn, RemoveEnemy -> Delete.
+    - Ground / Grid side: AddEnemy -> Register, RemoveEnemy -> Unregister.
+    A Character is Registered for as long as it exists; the Grid never deletes anything.
+
