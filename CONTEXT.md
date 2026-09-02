@@ -1,10 +1,14 @@
+Use [CONTEXT_SKILLS.md](.claude\CONTEXT_SKILLS.md) to know the concepts used by skills and the human. 
+
 # Tactical Game
+
+This is a small Unity Project with only one developer working on it. It is on a public github. 
 
 A prototype of a tactical game: a Player commands Characters on the Ground, while Enemies are placed across that same Ground under a Minimum Spacing rule.
 
 ## Files In the project 
 
-I use ./TODO.txt as a temporary list of remaining tasks
+I use ./TODO.txt as a temporary list of remaining tasks but we will switch to the **Issue tracker** 
 
 ## Language
 
